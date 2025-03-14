@@ -1,0 +1,46 @@
+
+    .card-custom {
+        border-radius: 20px;
+        overflow: hidden;
+        transition: transform 1s ease-in-out, box-shadow 1s ease-in-out;
+
+    }
+
+    .card-custom:hover {
+        transform: scale(1.05);
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+        color: #0A4D68; /* color elegante, puedes ajustar */
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .card-body {
+        background-color: #fff;
+        padding: 1.2rem;
+    }
+
+    .hover-shadow {
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .hover-shadow:hover {
+        box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    a.text-dark:hover {
+        text-decoration: none;
+        color: #088395;
+    }
+

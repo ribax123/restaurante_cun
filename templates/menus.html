@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Menús - {{ tipo }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (solo si no los tienes ya) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .menu-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-radius: 15px;
+        }
+
+        .menu-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            color: #088395;
+        }
+
+        footer {
+            background-color: #101213;
+            color: #fff;
+            padding: 2rem 0;
+        }
+
+        .footer-text {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .hero {
+            background: linear-gradient(to right, #05BFDB, #00FFCA);
+            color: #000;
+            padding: 80px 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+
+<!-- Toast  -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="position-fixed bottom-0 end-0 p-4" style="z-index: 1055;">
+    {% for category, message in messages %}
+    <div class="toast text-bg-{{ 'danger' if category == 'danger' else category }} border-0 show shadow-lg" role="alert"
+        aria-live="assertive" aria-atomic="true" style="min-width: 400px; max-width: 500px; font-size: 1.1rem;">
+        <div class="d-flex align-items-center">
+            <div class="toast-body py-3 px-4 d-flex align-items-center">
+                <i class="bi {{ 
+                  'bi-check-circle-fill' if category == 'success' else 
+                  'bi-exclamation-triangle-fill' if category == 'warning' else 
+                  'bi-info-circle-fill' if category == 'info' else 
+                  'bi-x-circle-fill' 
+              }} me-3 fs-4"></i>
+                <span>{{ message }}</span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast"
+                aria-label="Cerrar"></button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+
+
+
+
+<body>
+
+
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">Restaurante Gourmet Cun</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/quienes-somos">Quiénes Somos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contacto">Contáctenos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin">Administrador</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <main class="pt-5 mt-5">
+        <div class="container">
+            <!-- Hero personalizado -->
+            <div class="hero text-center shadow">
+                <h1 class="display-5 fw-bold">Menús tipo: {{ tipo }}</h1>
+                <p class="lead mb-0">Disfruta de nuestras mejores preparaciones gourmet.</p>
+            </div>
+
+            <!-- Tarjetas de menú -->
+            <div class="row">
+                {% for menu in menus %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow border-0 menu-card">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <h5 class="card-title fw-bold">{{ menu[1] }}</h5>
+                            <p class="card-text text-muted">{{ menu[2] }}</p>
+                            <button class="btn btn-info mt-auto fw-semibold" data-bs-toggle="modal"
+                                data-bs-target="#pedidoModal" onclick="abrirModal('{{ menu[1]|escape }}')">
+                                Hacer pedido
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="pedidoModal" tabindex="-1" aria-labelledby="pedidoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="/guardar_pedido">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Hacer pedido</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="menu_nombre" id="menuNombreInput">
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre del menú</label>
+                            <input type="text" class="form-control" id="menuNombreVisible" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre del comensal</label>
+                            <input type="text" class="form-control" name="nombre_comensal" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cédula</label>
+                            <input type="text" class="form-control" name="cedula_comensal" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Correo</label>
+                            <input type="email" class="form-control" name="correo_comensal" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" name="telefono_comensal" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" name="cantidad" min="1" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">¿Para llevar o en el lugar?</label>
+                            <select class="form-select" name="tipo_consumo" id="tipo_consumo" required
+                                onchange="mostrarMesa()">
+                                <option value="en el lugar">En el lugar</option>
+                                <option value="para llevar">Para llevar</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3" id="mesaDiv">
+                            <label class="form-label">Número de mesa</label>
+                            <input type="number" class="form-control" name="numero_mesa" min="1">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Comentarios adicionales</label>
+                            <textarea class="form-control" name="comentarios" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Enviar pedido</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-auto">
+        <div class="container">
+            <p class="footer-text mb-1">© 2025 Restaurante Gourmet. Todos los derechos reservados.</p>
+            <p class="footer-text mb-0">Contacto: contacto@restaurantegourmet.com | Tel: +57 3223154627</p>
+        </div>
+    </footer>
+
+    <script>
+        function abrirModal(nombreMenu) {
+            document.getElementById('menuNombreInput').value = nombreMenu;
+            document.getElementById('menuNombreVisible').value = nombreMenu;
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toastList = [].slice.call(document.querySelectorAll('.toast'));
+            toastList.forEach(function (toastEl) {
+                const toast = new bootstrap.Toast(toastEl, { delay: 5000 });
+                toast.show();
+            });
+        });
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
