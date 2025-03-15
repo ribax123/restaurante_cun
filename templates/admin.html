@@ -1,57 +1,77 @@
 <!DOCTYPE html>
+<!-- Define el tipo de documento como HTML5 -->
 <html lang="es">
+<!-- Inicia el documento HTML con el idioma español -->
 <head>
+    <!-- Encabezado del documento, contiene metadatos y enlaces a recursos externos -->
     <meta charset="UTF-8">
+    <!-- Especifica la codificación de caracteres como UTF-8 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Configura la vista para dispositivos móviles -->
     <title>Panel Administrador</title>
+    <!-- Título de la página que aparece en la pestaña del navegador -->
     <link rel="icon" href="/static/img/favicon.png" type="image/x-icon">
+    <!-- Enlace al ícono de la pestaña del navegador -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
+    
+    <!-- Estilos personalizados -->
     <style>
+        /* Estilo del fondo de la página */
         body {
             background-color: #f8f9fa;
         }
 
+        /* Estilo de la barra de navegación */
         .navbar-dark {
             background-color: #0A4D68 !important;
         }
 
+        /* Estilo de la tabla con fondo oscuro */
         .table-dark {
             background-color: #088395 !important;
             color: white;
         }
 
+        /* Estilo de botones con color de fondo específico */
         .btn-info {
             background-color: #05BFDB !important;
             border-color: #05BFDB !important;
             color: #fff !important;
         }
 
+        /* Estilo de botones de peligro */
         .btn-danger {
             background-color: #dc3545 !important;
         }
 
+        /* Estilo de botones de advertencia */
         .btn-warning {
             background-color: #ffc107 !important;
             color: #000 !important;
         }
 
+        /* Estilo de botones de éxito */
         .btn-success {
             background-color: #00FFCA !important;
             border-color: #00FFCA !important;
             color: #000 !important;
         }
 
+        /* Estilo del encabezado del modal */
         .modal-header {
             background-color: #088395;
             color: #fff;
         }
 
+        /* Estilo del pie de página del modal */
         .modal-footer .btn-secondary {
             background-color: #0A4D68 !important;
             border-color: #0A4D68 !important;
             color: #fff !important;
         }
 
+        /* Estilo del contenedor de notificaciones (toasts) */
         .toast-container {
             position: fixed;
             top: 1rem;
@@ -59,7 +79,7 @@
             z-index: 9999;
         }
 
-        /* Estilos responsivos agregados */
+        /* Estilos responsivos para pantallas pequeñas */
         @media (max-width: 768px) {
             .table-responsive {
                 overflow-x: auto;
@@ -77,15 +97,19 @@
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
         <div class="container">
+            <!-- Logo o nombre de la marca -->
             <a class="navbar-brand fw-bold" href="/">Pedidos Gourmet Cun</a>
+            <!-- Botón para colapsar la barra de navegación en dispositivos móviles -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!-- Contenido de la barra de navegación -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <!-- Enlaces de navegación -->
                     <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/quienes-somos">Quiénes Somos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contacto">Contáctenos</a></li>
@@ -95,15 +119,19 @@
         </div>
     </nav>
 
-    <!-- Contenido principal -->
+    <!-- Contenido principal de la página -->
     <div class="container pt-5 mt-5">
+        <!-- Encabezado y botón de cierre de sesión -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0">Pedidos registrados</h3>
             <a href="/logout" class="btn btn-danger">Cerrar sesión</a>
         </div>
 
+        <!-- Tabla responsiva para mostrar los pedidos -->
         <div class="table-responsive">
+            <!-- Tabla de pedidos -->
             <table class="table table-bordered table-striped">
+                <!-- Encabezado de la tabla -->
                 <thead class="table-dark text-center">
                     <tr>
                         <th>ID</th>
@@ -121,9 +149,12 @@
                         <th>Actualizar</th>
                     </tr>
                 </thead>
+                <!-- Cuerpo de la tabla -->
                 <tbody>
+                    <!-- Bucle para mostrar cada pedido -->
                     {% for pedido in pedidos %}
                     <tr>
+                        <!-- Datos del pedido -->
                         <td>{{ pedido[0] }}</td>
                         <td>{{ pedido[1] }}</td>
                         <td>{{ pedido[2] }}</td>
@@ -135,23 +166,28 @@
                         <td>{{ pedido[6] }}</td>
                         <td>{{ pedido[10] }}</td>
                         <td>{{ pedido[7] }}</td>
+                        <!-- Botón para eliminar el pedido -->
                         <td>
                             <form action="/eliminar_pedido/{{ pedido[0] }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este pedido?');">
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                             </form>
                         </td>
+                        <!-- Botón para abrir el modal de edición -->
                         <td>
                             <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar{{ pedido[0] }}">Actualizar</button>
 
-                            <!-- Modal para editar -->
+                            <!-- Modal para editar el pedido -->
                             <div class="modal fade" id="modalEditar{{ pedido[0] }}" tabindex="-1" aria-labelledby="modalLabel{{ pedido[0] }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
+                                        <!-- Formulario para actualizar el pedido -->
                                         <form method="POST" action="{{ url_for('actualizar_pedido', id_pedido=pedido[0]) }}">
+                                            <!-- Encabezado del modal -->
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="modalLabel{{ pedido[0] }}">Editar Pedido #{{ pedido[0] }}</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                                             </div>
+                                            <!-- Cuerpo del modal con campos editables -->
                                             <div class="modal-body">
                                                 <div class="mb-2">
                                                     <label>Nombre del Menú</label>
@@ -193,6 +229,7 @@
                                                     <input type="number" class="form-control" name="numero_mesa" value="{{ pedido[10] }}">
                                                 </div>
                                             </div>
+                                            <!-- Pie de página del modal con botones de acción -->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                                 <button type="submit" class="btn btn-success">Guardar cambios</button>
@@ -209,8 +246,9 @@
         </div>
     </div>
 
-    <!-- TOASTS -->
+    <!-- Contenedor de notificaciones (toasts) -->
     <div class="toast-container">
+        <!-- Bucle para mostrar mensajes emergentes -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -225,7 +263,9 @@
         {% endwith %}
     </div>
 
+    <!-- Script de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script para inicializar los toasts -->
     <script>
         document.querySelectorAll('.toast').forEach(toastEl => {
             new bootstrap.Toast(toastEl, { delay: 4000 }).show();

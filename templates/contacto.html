@@ -1,18 +1,29 @@
 <!DOCTYPE html>
+<!-- Define el tipo de documento como HTML5 -->
 <html lang="es">
-
+<!-- Inicia el documento HTML con el idioma español -->
 <head>
+    <!-- Encabezado del documento, contiene metadatos y enlaces a recursos externos -->
     <meta charset="UTF-8">
+    <!-- Especifica la codificación de caracteres como UTF-8 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Configura la vista para dispositivos móviles -->
     <!-- Ícono de la pestaña -->
     <link rel="icon" href="/static/img/favicon.png" type="image/x-icon">
+    <!-- Enlace al ícono de la pestaña del navegador -->
     <title>Contáctenos</title>
+    <!-- Título de la página -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
+
+    <!-- Estilos personalizados -->
     <style>
+        /* Estilo del cuerpo de la página con desplazamiento suave */
         body {
             scroll-behavior: smooth;
         }
 
+        /* Estilo de la sección hero con fondo degradado y una imagen de fondo */
         .hero {
             background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
                 url('/static/img/contacto.png') center/cover no-repeat;
@@ -25,11 +36,13 @@
             text-align: center;
         }
 
+        /* Estilo del título en la sección hero */
         .hero h1 {
             font-size: 3rem;
             font-weight: bold;
         }
 
+        /* Estilo del pie de página */
         footer {
             background-color: #101213;
             color: white;
@@ -39,56 +52,68 @@
 </head>
 
 <body>
-
-    <!-- Navbar -->
+    <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
         <div class="container">
+            <!-- Logo o nombre de la marca -->
             <a class="navbar-brand fw-bold" href="/">Restaurante Gourmet Cun</a>
+            <!-- Botón para colapsar la barra de navegación en dispositivos móviles -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!-- Contenido de la barra de navegación -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <!-- Enlaces de navegación -->
                     <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/quienes-somos">Quiénes Somos</a></li>
                     <li class="nav-item"><a class="nav-link active" href="/contacto">Contáctenos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/login" target="_blank" >Administrador</a></li>
-                 </ul>
+                    <li class="nav-item"><a class="nav-link" href="/login" target="_blank">Administrador</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Sección Hero -->
     <section class="hero">
         <div class="container">
+            <!-- Título de la sección hero -->
             <h1>Contáctenos</h1>
+            <!-- Descripción de la sección hero -->
             <p>Estamos para escucharte y ayudarte en lo que necesites</p>
         </div>
     </section>
 
-    <!-- Contact Form -->
+    <!-- Formulario de contacto -->
     <section class="py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
+                    <!-- Título del formulario -->
                     <h2 class="fw-bold mb-4 text-center">Escríbenos</h2>
+                    <!-- Formulario para enviar mensajes de contacto -->
                     <form action="/enviar-contacto" method="POST">
+                        <!-- Campo para el nombre completo -->
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre completo</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
+                        <!-- Campo para el correo electrónico -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico</label>
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
+                        <!-- Campo para el teléfono -->
                         <div class="mb-3">
                             <label for="telefono" class="form-label">Teléfono</label>
                             <input type="tel" class="form-control" id="telefono" name="telefono">
                         </div>
+                        <!-- Campo para el mensaje -->
                         <div class="mb-3">
                             <label for="mensaje" class="form-label">Mensaje</label>
                             <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
                         </div>
+                        <!-- Botón para enviar el formulario -->
                         <div class="text-center">
                             <button type="submit" class="btn btn-danger rounded-pill px-4">Enviar mensaje</button>
                         </div>
@@ -96,6 +121,7 @@
                 </div>
             </div>
 
+            <!-- Información de contacto adicional -->
             <div class="row mt-5">
                 <div class="col text-center">
                     <h5 class="fw-bold">O visítanos en:</h5>
@@ -106,16 +132,18 @@
             </div>
         </div>
     </section>
- 
-    <!-- Footer -->
+
+    <!-- Pie de página -->
     <footer class="text-center">
         <div class="container">
+            <!-- Texto de derechos reservados -->
             <p class="mb-1">© 2025 Restaurante Gourmet. Todos los derechos reservados.</p>
+            <!-- Información de contacto en el pie de página -->
             <p class="mb-0">Contacto: contacto@cun.cun | Tel: +57 3223154627</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripts de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

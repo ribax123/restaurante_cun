@@ -5,10 +5,12 @@ from flask import session
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
-
+# Inicialización de la aplicación Flask
 app = Flask(__name__)
+# Configuración de la aplicación desde el archivo de configuración
 app.config.from_object(config['development'])
 
+# Inicialización de la extensión MySQL para Flask
 mysql = MySQL(app)
 
 # Función para obtener menús por tipo
@@ -20,45 +22,42 @@ def obtener_menus_por_tipo(tipo_menu):
     cur.close()
     return menus
 
-# Ruta de prueba para mostrar menús por tipo
+# Ruta para mostrar menús por tipo
 @app.route('/menus/<tipo>')
 def mostrar_menus(tipo):
     menus = obtener_menus_por_tipo(tipo)
     return render_template('menus.html', menus=menus, tipo=tipo)
 
-
-
+# Ruta para la página de inicio
 @app.route('/') 
 def home():
-   
     return render_template('index.html')
 
-
+# Ruta para la página de servicios
 @app.route('/servicios') 
 def servicios():
-   
     return render_template('servicios.html')
 
-
+# Ruta para la página "Quiénes Somos"
 @app.route('/quienes-somos') 
 def quienes_somos():
-   
     return render_template('quienes_somos.html')
 
+# Ruta para la página de contacto
 @app.route('/contacto') 
 def contacto():
-   
     return render_template('contacto.html')
 
-
+# Ruta para la página de login
 @app.route('/login')
 def login():
     return render_template('login.html')
 
-
+# Ruta para guardar un pedido
 @app.route('/guardar_pedido', methods=['POST'])
 def guardar_pedido():
     if request.method == 'POST':
+        # Obtener los datos del formulario
         menu_nombre = request.form['menu_nombre']
         nombre_comensal = request.form['nombre_comensal']
         cedula_comensal = request.form['cedula_comensal']
@@ -70,6 +69,7 @@ def guardar_pedido():
         comentarios = request.form['comentarios']
 
         try:
+            # Insertar el pedido en la base de datos
             cur = mysql.connection.cursor()
             cur.execute("""
                 INSERT INTO pedidos (menu_nombre, nombre_comensal, cedula, correo_comensal, telefono_comensal, cantidad, tipo_consumo, numero_mesa, comentarios)
@@ -83,14 +83,15 @@ def guardar_pedido():
             flash('Error al guardar el pedido.', 'danger')
 
         return redirect(request.referrer)
-    
-    
+
+# Ruta para el login del administrador
 @app.route('/login_admin', methods=['POST'])
 def login_admin():
     usuario = request.form['usuario']
     clave = request.form['clave']
 
     try:
+        # Verificar las credenciales del administrador
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM admin WHERE usuario = %s", (usuario,))
         admin = cur.fetchone()
@@ -109,6 +110,7 @@ def login_admin():
         flash('Error al procesar el login.', 'danger')
         return redirect('/login')
 
+# Ruta para el panel de administración
 @app.route('/admin')
 def admin():
     if not session.get('admin_logged'):
@@ -116,6 +118,7 @@ def admin():
         return redirect('/login')
 
     try:
+        # Obtener todos los pedidos ordenados por ID de forma descendente
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM pedidos ORDER BY id DESC")
         pedidos = cur.fetchall()
@@ -125,15 +128,15 @@ def admin():
         print("Error al cargar pedidos:", e)
         flash('Error al cargar los pedidos.', 'danger')
         return redirect('/login')
-    
-    
+
+# Ruta para cerrar sesión
 @app.route('/logout')
 def logout():
     session.pop('admin_logged', None)
     flash('Sesión cerrada.', 'info')
     return redirect('/login')
 
-
+# Ruta para crear un administrador (solo para uso interno)
 @app.route('/crear_admin')
 def crear_admin():
     usuario = 'admincun'
@@ -141,6 +144,7 @@ def crear_admin():
     clave_hash = generate_password_hash(clave)
 
     try:
+        # Insertar un nuevo administrador en la base de datos
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO admin (usuario, clave) VALUES (%s, %s)", (usuario, clave_hash))
         mysql.connection.commit()
@@ -148,11 +152,12 @@ def crear_admin():
         return 'Admin creado con éxito'
     except Exception as e:
         return f'Error: {e}'
-    
-    
+
+# Ruta para eliminar un pedido
 @app.route('/eliminar_pedido/<int:id_pedido>', methods=['POST'])
 def eliminar_pedido(id_pedido):
     try:
+        # Eliminar un pedido por su ID
         cur = mysql.connection.cursor()
         cur.execute("DELETE FROM pedidos WHERE id = %s", (id_pedido,))
         mysql.connection.commit()
@@ -160,10 +165,12 @@ def eliminar_pedido(id_pedido):
     except Exception as e:
         print(f"Error al eliminar pedido: {e}")
         flash('Error al eliminar el pedido', 'danger')
-    return redirect(url_for('admin'))  # Cambia si tu función tiene otro nombre
+    return redirect(url_for('admin'))  # Redirige al panel de administración
 
+# Ruta para actualizar un pedido
 @app.route('/actualizar_pedido/<int:id_pedido>', methods=['POST'])
 def actualizar_pedido(id_pedido):
+    # Obtener los datos del formulario
     menu_nombre = request.form['menu_nombre']
     nombre_comensal = request.form['nombre_comensal']
     correo_comensal = request.form['correo_comensal']
@@ -175,6 +182,7 @@ def actualizar_pedido(id_pedido):
     numero_mesa = request.form['numero_mesa']
 
     try:
+        # Actualizar el pedido en la base de datos
         cur = mysql.connection.cursor()
         cur.execute("""
             UPDATE pedidos
@@ -194,8 +202,8 @@ def actualizar_pedido(id_pedido):
     except Exception as e:
         print(f"Error al actualizar pedido: {e}")
         flash('Error al actualizar el pedido', 'danger')
-    return redirect(url_for('admin'))  # cambia 'admin' si es otra tu vista
+    return redirect(url_for('admin'))  # Redirige al panel de administración
 
-
+# Punto de entrada de la aplicación
 if __name__ == '__main__':
     app.run()

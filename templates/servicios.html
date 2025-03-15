@@ -1,20 +1,31 @@
 <!DOCTYPE html>
+<!-- Define el tipo de documento como HTML5 -->
 <html lang="es">
-
+<!-- Inicia el documento HTML con el idioma español -->
 <head>
+    <!-- Encabezado del documento, contiene metadatos y enlaces a recursos externos -->
     <meta charset="UTF-8">
+    <!-- Especifica la codificación de caracteres como UTF-8 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Configura la vista para dispositivos móviles -->
     <title>Servicios</title>
+    <!-- Título de la página -->
     <!-- Ícono de la pestaña -->
     <link rel="icon" href="/static/img/favicon.png" type="image/x-icon">
+    <!-- Enlace al ícono de la pestaña del navegador -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Enlace a una hoja de estilos personalizada -->
 
+    <!-- Estilos personalizados -->
     <style>
+        /* Estilo del cuerpo de la página con desplazamiento suave */
         body {
             scroll-behavior: smooth;
         }
 
+        /* Estilo de la sección hero con fondo degradado y una imagen de fondo */
         .hero {
             background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
                 url('/static/img/servicios.png') center/cover no-repeat;
@@ -27,16 +38,19 @@
             text-align: center;
         }
 
+        /* Estilo del título en la sección hero */
         .hero h1 {
             font-size: 3rem;
             font-weight: bold;
         }
 
+        /* Estilo de las imágenes de las tarjetas */
         .card-img-top {
             height: 200px;
             object-fit: cover;
         }
 
+        /* Estilo del pie de página */
         footer {
             background-color: #101213;
             color: white;
@@ -46,16 +60,19 @@
 </head>
 
 <body>
-
-    <!-- Navbar -->
+    <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
         <div class="container">
+            <!-- Logo o nombre de la marca -->
             <a class="navbar-brand fw-bold" href="/">Restaurante Gourmet Cun</a>
+            <!-- Botón para colapsar la barra de navegación en dispositivos móviles -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!-- Contenido de la barra de navegación -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <!-- Enlaces de navegación -->
                     <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/quienes-somos">Quiénes Somos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contacto">Contáctenos</a></li>
@@ -66,27 +83,34 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Sección Hero -->
     <section class="hero">
         <div class="container">
+            <!-- Título de la sección hero -->
             <h1>Servicios</h1>
+            <!-- Descripción de la sección hero -->
             <p>Explora nuestros menús y deléitate con lo mejor de la cocina gourmet</p>
         </div>
     </section>
 
-    <!-- Servicios / Menús -->
+    <!-- Sección de Servicios / Menús -->
     <section class="py-5">
         <div class="container">
+            <!-- Título de la sección de menús -->
             <h2 class="text-center fw-bold mb-5">Nuestros Menús</h2>
+            <!-- Contenedor de tarjetas de menús -->
             <div class="row row-cols-1 row-cols-md-3 g-4">
 
-                <!-- Menú 1 -->
+                <!-- Menú 1: Menú Ejecutivo -->
                 <div class="col">
                     <a href="/menus/Ejecutivo" class="text-decoration-none text-dark">
                         <div class="card card-custom h-100 shadow hover-shadow transition">
+                            <!-- Imagen del menú ejecutivo -->
                             <img src="/static/img/1.png" class="card-img-top" alt="Menú Ejecutivo">
                             <div class="card-body">
+                                <!-- Título del menú -->
                                 <h5 class="card-title fw-bold">Menú Ejecutivo</h5>
+                                <!-- Descripción del menú -->
                                 <p class="card-text">Ideal para tu almuerzo diario. Incluye entrada, plato fuerte,
                                     bebida y postre.</p>
                             </div>
@@ -94,13 +118,16 @@
                     </a>
                 </div>
 
-                <!-- Menú 2 -->
+                <!-- Menú 2: Menú Gourmet -->
                 <div class="col">
                     <a href="/menus/Gourmet" class="text-decoration-none text-dark">
                         <div class="card card-custom h-100 shadow hover-shadow transition">
+                            <!-- Imagen del menú gourmet -->
                             <img src="/static/img/2.png" class="card-img-top" alt="Menú Gourmet">
                             <div class="card-body">
+                                <!-- Título del menú -->
                                 <h5 class="card-title fw-bold">Menú Gourmet</h5>
+                                <!-- Descripción del menú -->
                                 <p class="card-text">Un menú exclusivo con platos internacionales y sabores únicos para
                                     sorprender tu paladar.</p>
                             </div>
@@ -108,13 +135,16 @@
                     </a>
                 </div>
 
-                <!-- Menú 3 -->
+                <!-- Menú 3: Menú Vegetariano -->
                 <div class="col">
                     <a href="/menus/Vegetariano" class="text-decoration-none text-dark">
                         <div class="card card-custom h-100 shadow hover-shadow transition">
+                            <!-- Imagen del menú vegetariano -->
                             <img src="/static/img/3.png" class="card-img-top" alt="Menú Vegetariano">
                             <div class="card-body">
+                                <!-- Título del menú -->
                                 <h5 class="card-title fw-bold">Menú Vegetariano</h5>
+                                <!-- Descripción del menú -->
                                 <p class="card-text">Opciones saludables, frescas y deliciosas para quienes prefieren
                                     una alimentación sin carne.</p>
                             </div>
@@ -122,13 +152,16 @@
                     </a>
                 </div>
 
-                <!-- Menú 4 -->
+                <!-- Menú 4: Desayunos Especiales -->
                 <div class="col">
                     <a href="/menus/Especial" class="text-decoration-none text-dark">
                         <div class="card card-custom h-100 shadow hover-shadow transition">
+                            <!-- Imagen de los desayunos especiales -->
                             <img src="/static/img/4.png" class="card-img-top" alt="Desayunos Especiales">
                             <div class="card-body">
+                                <!-- Título del menú -->
                                 <h5 class="card-title fw-bold">Desayunos Especiales</h5>
+                                <!-- Descripción del menú -->
                                 <p class="card-text">Inicia tu día con energía. Disfruta nuestras opciones de desayuno
                                     completas y sabrosas.</p>
                             </div>
@@ -136,13 +169,16 @@
                     </a>
                 </div>
 
-                <!-- Menú 5 -->
+                <!-- Menú 5: Bebidas y Cócteles -->
                 <div class="col">
                     <a href="/menus/Cócteles" class="text-decoration-none text-dark">
                         <div class="card card-custom h-100 shadow hover-shadow transition">
+                            <!-- Imagen de bebidas y cócteles -->
                             <img src="/static/img/5.png" class="card-img-top" alt="Bebidas y Cócteles">
                             <div class="card-body">
+                                <!-- Título del menú -->
                                 <h5 class="card-title fw-bold">Bebidas y Cócteles</h5>
+                                <!-- Descripción del menú -->
                                 <p class="card-text">Desde jugos naturales hasta cócteles artesanales. ¡El
                                     acompañamiento perfecto para tu comida!</p>
                             </div>
@@ -150,13 +186,16 @@
                     </a>
                 </div>
 
-                <!-- Menú 6 -->
+                <!-- Menú 6: Postres Artesanales -->
                 <div class="col">
                     <a href="/menus/Postre" class="text-decoration-none text-dark">
                         <div class="card card-custom h-100 shadow hover-shadow transition">
+                            <!-- Imagen de postres artesanales -->
                             <img src="/static/img/6.png" class="card-img-top" alt="Postres Artesanales">
                             <div class="card-body">
+                                <!-- Título del menú -->
                                 <h5 class="card-title fw-bold">Postres Artesanales</h5>
+                                <!-- Descripción del menú -->
                                 <p class="card-text">Dulces tentaciones hechas en casa. Prueba nuestros postres frescos
                                     y llenos de sabor.</p>
                             </div>
@@ -168,16 +207,17 @@
         </div>
     </section>
 
-
-    <!-- Footer -->
+    <!-- Pie de página -->
     <footer class="text-center">
         <div class="container">
+            <!-- Texto de derechos reservados -->
             <p class="mb-1">© 2025 Restaurante Gourmet. Todos los derechos reservados.</p>
+            <!-- Información de contacto en el pie de página -->
             <p class="mb-0">Contacto: contacto@restaurantegourmet.com | Tel: +57 3223154627</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripts de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

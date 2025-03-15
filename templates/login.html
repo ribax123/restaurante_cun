@@ -1,25 +1,37 @@
 <!DOCTYPE html>
+<!-- Define el tipo de documento como HTML5 -->
 <html lang="es">
-
+<!-- Inicia el documento HTML con el idioma español -->
 <head>
+    <!-- Encabezado del documento, contiene metadatos y enlaces a recursos externos -->
     <meta charset="UTF-8">
+    <!-- Especifica la codificación de caracteres como UTF-8 -->
     <title>Login</title>
+    <!-- Título de la página que aparece en la pestaña del navegador -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Configura la vista para dispositivos móviles -->
     <!-- Ícono de la pestaña -->
     <link rel="icon" href="/static/img/favicon.png" type="image/x-icon">
+    <!-- Enlace al ícono de la pestaña del navegador -->
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Enlace a la fuente de Google Fonts -->
     <!-- Bootstrap Icons (para los iconos del toast) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Enlace a los íconos de Bootstrap -->
 
+    <!-- Estilos personalizados -->
     <style>
+        /* Estilo del fondo de la página con un gradiente */
         body {
             background: linear-gradient(to right, #F8F9FA, #e3f2fd);
             font-family: 'Quicksand', sans-serif;
         }
 
+        /* Estilo del contenedor del formulario de login */
         .login-container {
             margin-top: 80px;
             background-color: white;
@@ -28,27 +40,32 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
+        /* Estilo del título del formulario */
         .login-title {
             font-weight: 600;
             margin-bottom: 30px;
             color: #0A4D68;
         }
 
+        /* Estilo de las etiquetas del formulario */
         .form-label {
             font-weight: 500;
             color: #333;
         }
 
+        /* Estilo del botón primario */
         .btn-primary {
             background-color: #088395;
             border: none;
             transition: background-color 0.3s ease;
         }
 
+        /* Estilo del botón primario al pasar el mouse */
         .btn-primary:hover {
             background-color: #05BFDB;
         }
 
+        /* Estilo de las alertas */
         .alert {
             border-radius: 10px;
         }
@@ -57,15 +74,19 @@
 
 <body>
 
-    <!-- Navbar -->
+    <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
         <div class="container">
+            <!-- Logo o nombre de la marca -->
             <a class="navbar-brand fw-bold" href="/">Restaurante Gourmet Cun</a>
+            <!-- Botón para colapsar la barra de navegación en dispositivos móviles -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!-- Contenido de la barra de navegación -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <!-- Enlaces de navegación -->
                     <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/quienes-somos">Quiénes Somos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contacto">Contáctenos</a></li>
@@ -76,15 +97,18 @@
         </div>
     </nav>
 
-    <!-- Toast -->
+    <!-- Toast para mensajes emergentes -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
+                <!-- Contenedor del toast -->
                 <div class="position-fixed bottom-0 end-0 p-4" style="z-index: 1055;">
+                    <!-- Toast con estilo dinámico según la categoría del mensaje -->
                     <div class="toast text-bg-{{ 'danger' if category == 'danger' else category }} border-0 show shadow-lg"
                         role="alert" aria-live="assertive" aria-atomic="true"
                         style="min-width: 400px; max-width: 500px; font-size: 1.1rem;">
                         <div class="d-flex align-items-center">
+                            <!-- Cuerpo del toast con ícono y mensaje -->
                             <div class="toast-body py-3 px-4 d-flex align-items-center">
                                 <i class="bi {{ 
                                     'bi-check-circle-fill' if category == 'success' else 
@@ -94,6 +118,7 @@
                                 }} me-3 fs-4"></i>
                                 <span>{{ message }}</span>
                             </div>
+                            <!-- Botón para cerrar el toast -->
                             <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast"
                                 aria-label="Cerrar"></button>
                         </div>
@@ -103,22 +128,27 @@
         {% endif %}
     {% endwith %}
 
-    <!-- Formulario -->
+    <!-- Contenedor del formulario de login -->
     <div class="container mb-4">
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="login-container">
+                    <!-- Título del formulario -->
                     <h3 class="text-center login-title">Ingreso Administrador</h3>
 
+                    <!-- Formulario de login -->
                     <form method="POST" action="/login_admin">
+                        <!-- Campo para el usuario -->
                         <div class="mb-3">
                             <label class="form-label">Usuario</label>
                             <input type="text" name="usuario" class="form-control" placeholder="Escriba su usuario" required>
                         </div>
+                        <!-- Campo para la clave -->
                         <div class="mb-4">
                             <label class="form-label">Clave</label>
                             <input type="password" name="clave" class="form-control" placeholder="Ingrese su clave" required>
                         </div>
+                        <!-- Botón para enviar el formulario -->
                         <button type="submit" class="btn btn-primary w-100">Ingresar</button>
                     </form>
                 </div>
@@ -126,9 +156,10 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Script de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Script para inicializar los toasts -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const toastElements = document.querySelectorAll('.toast');
