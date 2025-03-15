@@ -206,4 +206,4 @@ def actualizar_pedido(id_pedido):
 
 # Punto de entrada de la aplicación
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='0.0.0.0', port=7272)
