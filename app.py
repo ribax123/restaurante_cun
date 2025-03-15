@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request
+from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_mysqldb import MySQL
 from config import config
 from flask import session
@@ -148,7 +148,53 @@ def crear_admin():
         return 'Admin creado con éxito'
     except Exception as e:
         return f'Error: {e}'
+    
+    
+@app.route('/eliminar_pedido/<int:id_pedido>', methods=['POST'])
+def eliminar_pedido(id_pedido):
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM pedidos WHERE id = %s", (id_pedido,))
+        mysql.connection.commit()
+        flash('Pedido eliminado correctamente', 'success')
+    except Exception as e:
+        print(f"Error al eliminar pedido: {e}")
+        flash('Error al eliminar el pedido', 'danger')
+    return redirect(url_for('admin'))  # Cambia si tu función tiene otro nombre
 
+@app.route('/actualizar_pedido/<int:id_pedido>', methods=['POST'])
+def actualizar_pedido(id_pedido):
+    menu_nombre = request.form['menu_nombre']
+    nombre_comensal = request.form['nombre_comensal']
+    correo_comensal = request.form['correo_comensal']
+    telefono_comensal = request.form['telefono_comensal']
+    cantidad = request.form['cantidad']
+    comentarios = request.form['comentarios']
+    cedula = request.form['cedula']
+    tipo_consumo = request.form['tipo_consumo']
+    numero_mesa = request.form['numero_mesa']
+
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE pedidos
+            SET menu_nombre = %s,
+                nombre_comensal = %s,
+                correo_comensal = %s,
+                telefono_comensal = %s,
+                cantidad = %s,
+                comentarios = %s,
+                cedula = %s,
+                tipo_consumo = %s,
+                numero_mesa = %s
+            WHERE id = %s
+        """, (menu_nombre, nombre_comensal, correo_comensal, telefono_comensal, cantidad, comentarios, cedula, tipo_consumo, numero_mesa, id_pedido))
+        mysql.connection.commit()
+        flash('Pedido actualizado correctamente', 'success')
+    except Exception as e:
+        print(f"Error al actualizar pedido: {e}")
+        flash('Error al actualizar el pedido', 'danger')
+    return redirect(url_for('admin'))  # cambia 'admin' si es otra tu vista
 
 
 if __name__ == '__main__':
